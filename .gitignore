@@ -3,6 +3,10 @@
 *.elf
 *.bin
 
+# Build folders
+build/
+out/
+
 # OS files
 .DS_Store
 Thumbs.db

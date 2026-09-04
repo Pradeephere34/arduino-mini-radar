@@ -11,6 +11,9 @@ ULN2003 IN1 → Arduino D8
 ULN2003 IN2 → Arduino D9
 ULN2003 IN3 → Arduino D10
 ULN2003 IN4 → Arduino D11
+
+The sketch passes the motor pins to the Stepper library in this order:
+`D8, D10, D9, D11`. This order is used so the 28BYJ-48 turns correctly.
 ```
 
 ### Ultrasonic Sensor

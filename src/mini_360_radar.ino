@@ -5,31 +5,40 @@
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
+#define STEPS_PER_REVOLUTION 2048
+#define DETECTION_DISTANCE 50
+#define MOTOR_PIN_1 8
+#define MOTOR_PIN_2 10
+#define MOTOR_PIN_3 9
+#define MOTOR_PIN_4 11
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
 // Stepper motor
-#define stepsPerRevolution 2048
-
-Stepper motor(stepsPerRevolution, 8, 10, 9, 11);
+Stepper motor(STEPS_PER_REVOLUTION, MOTOR_PIN_1, MOTOR_PIN_2, MOTOR_PIN_3, MOTOR_PIN_4);
 
 // Ultrasonic sensor
-int trig = 6;
-int echo = 7;
+const int trigPin = 6;
+const int echoPin = 7;
 
-int angle;
-int distance;
+int angle = 0;
+int distance = 0;
 
 long currentStep = 0;
 
 void setup()
 {
-  pinMode(trig, OUTPUT);
-  pinMode(echo, INPUT);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
 
   motor.setSpeed(10);
 
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C))
+  {
+    while (true)
+    {
+    }
+  }
 
   display.clearDisplay();
   display.setTextColor(WHITE);
@@ -54,7 +63,7 @@ void loop()
   for (angle = 0; angle <= 360; angle = angle + 5)
   {
     // Move motor to the required angle
-    long targetStep = (long)(angle * 2048.0 / 360.0);
+    long targetStep = (long)(angle * (float)STEPS_PER_REVOLUTION / 360.0);
 
     long steps = targetStep - currentStep;
 
@@ -82,22 +91,22 @@ int getDistance()
   long duration;
   int dist;
 
-  digitalWrite(trig, LOW);
+  digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
 
-  digitalWrite(trig, HIGH);
+  digitalWrite(trigPin, HIGH);
   delayMicroseconds(10);
 
-  digitalWrite(trig, LOW);
+  digitalWrite(trigPin, LOW);
 
-  duration = pulseIn(echo, HIGH, 30000);
+  duration = pulseIn(echoPin, HIGH, 30000);
 
   if (duration == 0)
   {
     return 100;
   }
 
-  dist = duration * 0.034 / 2;
+  dist = duration / 58;
 
   return dist;
 }
@@ -107,7 +116,7 @@ void showDisplay()
   display.clearDisplay();
 
   // 50 cm or more means no object
-  if (distance >= 50)
+  if (distance >= DETECTION_DISTANCE)
   {
     display.setCursor(0, 20);
     display.println("OBJECT : CLEAR");

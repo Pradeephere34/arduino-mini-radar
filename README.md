@@ -50,6 +50,16 @@ Stepper and Wire are included with the Arduino IDE.
 - A basic parking or proximity warning prototype
 - Classroom demonstrations of sensors and motor control
 
+## Possible Applications
+
+- Short-range obstacle detection
+- A distance-scanning demo for robotics projects
+- A basic parking or proximity warning prototype
+- Classroom demonstrations of sensors and motor control
+- Practice project for Arduino and embedded systems
+
+This is a small prototype for learning and demonstrations. It is not intended for accurate industrial measurement or safety-critical use.
+
 ## Notes
 
 The code uses approximately 2048 steps for one motor revolution. The angle is approximate because the actual result depends on the motor, power supply, and mechanical mounting. This project is intended for learning and demonstrations, not industrial measurement or safety-critical use.

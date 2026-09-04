@@ -1,62 +1,83 @@
 # Arduino Mini Radar
 
-A 360-degree radar system using an Arduino Uno, 28BYJ-48 stepper motor, HC-SR04 ultrasonic sensor, and SSD1306 OLED display.
+A compact embedded scanning system that rotates an ultrasonic sensor through a 180-degree sweep, measures distance in 5-degree increments, and presents the scan output on an OLED display.
 
-## Demo
+## Project Overview
 
-[Watch the radar working](videos/radar-demo.mp4)
+This project combines a motor, an ultrasonic distance sensor, and an I2C OLED display into a single real-time embedded system. At each scan position, the controller records the measured distance and updates the display before moving to the next angle.
 
-## Project Description
+The project was built to practice **sensor integration, motor control, I2C communication, and embedded program structure**.
 
-The project scans an area by rotating an HC-SR04 ultrasonic sensor in 5-degree steps. At every position, the sensor measures distance and the OLED shows the angle, distance, and detection status.
+## Features
 
-Objects closer than 50 cm are shown as detected.
+- Scans the surrounding area in 5-degree increments.
+- Measures distance with an ultrasonic sensor.
+- Displays scan information on an OLED screen.
+- Demonstrates coordinated control of multiple hardware components.
 
-## Components
+## Hardware
 
-- Arduino Uno
-- 28BYJ-48 stepper motor
-- ULN2003 stepper motor driver
-- HC-SR04 ultrasonic sensor
-- 0.96 inch SSD1306 OLED display
-- Jumper wires
-- 5V power supply
+| Component | Purpose |
+| --- | --- |
+| Arduino board | Runs the control and measurement logic |
+| Ultrasonic sensor | Measures distance to nearby objects |
+| Motor and driver | Rotates the sensor through the scan angles |
+| I2C OLED display | Presents the scan output |
+| Jumper wires and breadboard | Prototyping and connections |
 
-## Wiring
+## Technologies
 
-See [docs/wiring.md](docs/wiring.md) for the pin connections.
-
-## Libraries
-
-Install these libraries from the Arduino IDE Library Manager:
-
-- Adafruit GFX Library
-- Adafruit SSD1306
-
-Stepper and Wire are included with the Arduino IDE.
+- Embedded C / Arduino framework
+- Ultrasonic sensing
+- Motor control
+- I2C communication
+- OLED display interfacing
 
 ## How It Works
 
-1. The stepper motor starts at 0 degrees.
-2. The motor moves 5 degrees.
-3. The HC-SR04 measures the distance.
-4. The OLED displays the angle, distance, and object status.
-5. The motor continues scanning until 360 degrees, then starts again.
+1. The controller positions the sensor at the beginning of the scan.
+2. The motor rotates the sensor by 5 degrees.
+3. The ultrasonic sensor measures the distance at that angle.
+4. The controller updates the OLED display with the scan information.
+5. The sequence repeats until the sweep is complete.
 
-## Possible Applications
+## Getting Started
 
-- Short-range obstacle detection
-- A distance-scanning demo for robotics projects
-- A basic parking or proximity warning prototype
-- Classroom demonstrations of sensors and motor control
+### 1. Prepare the hardware
 
-## Notes
+Connect the ultrasonic sensor, motor driver, and OLED display to the Arduino according to your circuit design. Record the exact pin mapping before uploading the program.
 
-The code uses approximately 2048 steps for one motor revolution. The angle is approximate because the actual result depends on the motor, power supply, and mechanical mounting. This project is intended for learning and demonstrations, not industrial measurement or safety-critical use.
+### 2. Open the sketch
+
+Open the Arduino source file in the Arduino IDE or PlatformIO. Install the display and sensor libraries required by the sketch.
+
+### 3. Verify configuration
+
+Check the following before uploading:
+
+- Arduino board and processor selection.
+- Serial and I2C pin configuration.
+- Ultrasonic trigger and echo pins.
+- Motor control pins.
+- OLED I2C address.
+
+### 4. Upload and test
+
+Upload the sketch, open the serial monitor if the project uses one, and test the scan with objects at different distances. Keep the motor and wiring clear during the first run.
 
 ## Future Improvements
 
-- Add a graphical radar display
-- Add a buzzer when an object is detected
-- Improve motor angle calibration
-- Store detected object positions
+- Add a wiring diagram and a system photograph.
+- Add a live radar-style visualization through serial communication.
+- Record scan measurements for later analysis.
+- Improve handling of invalid or noisy sensor readings.
+- Add a clear calibration procedure for the motor and sensor.
+
+## Learning Outcomes
+
+This project provided practical experience in integrating hardware modules, coordinating timed operations, reading sensor data, driving a display over I2C, and organizing an embedded prototype around a repeatable control loop.
+
+## Author
+
+**A. L. Pradeep Chowdhary**  
+[GitHub](https://github.com/Pradeephere34) · [LinkedIn](https://www.linkedin.com/in/a-l-pradeep-chowdhary-800b76325/)
